@@ -3,6 +3,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.*;
 
+//FOR SERVER
+
 class Practise extends Thread
 {
 	Socket stk;
@@ -72,4 +74,40 @@ class Practise extends Thread
 	
 }
 
+//FOR CLIENT
 
+public class client
+{
+	public static void main(String []args) throws Exception
+	{
+		//create a client!!
+		Socket sk=new Socket("localhost",3000);
+		
+		//take input from keyBoard !!
+		
+		BufferedReader keyBoard=new BufferedReader(new InputStreamReader(System.in));
+		
+		//convert Input Stream(character) to Buffered Input(byte)
+		BufferedReader bf=new BufferedReader(new InputStreamReader(sk.getInputStream()));
+		
+		//make a PrintStream and convert into Output Stream
+		PrintStream ps=new PrintStream(sk.getOutputStream());
+		
+		String message;
+		
+		//make a StringBuilder object which helps to reverse a string
+		
+		StringBuilder sb;
+		do
+		{
+			message=keyBoard.readLine();
+	
+			ps.println(message);
+			message=bf.readLine();
+			System.out.println("From server "+message);
+			
+		}while(!message.equals("dne"));
+		
+		sk.close();
+	}
+}
